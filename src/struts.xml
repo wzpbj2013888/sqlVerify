@@ -37,4 +37,10 @@
 		
 	</package>
 	<include file="struts/action/login/action/login_struts.xml"></include>
+	
+	<package name="sqlVerify" namespace="/sqlVerify" extends="struts-default">
+		<action name="check">
+			<result>/sqlVerify/check.jsp</result>
+		</action>
+	</package>
 </struts>    

@@ -30,9 +30,11 @@
 	}
 	Ext.onReady(function() {
 	
+				var changeNo = (<%=request.getParameter("changeNo")%> == null) ? "" : <%=request.getParameter("changeNo")%>;
+				console.log(changeNo);
 				fields = ['id','name','status'];
-				url = "<%= basePath %>json/showTaskList.action";
-				
+				url = "<%= basePath %>json/showTaskList.action?changeNo="+changeNo;
+				console.log(url);
 				
 				title = "任务队列查询结果";
 				width = 700;

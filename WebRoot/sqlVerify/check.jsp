@@ -5,6 +5,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<%@ taglib uri="/struts-tags" prefix="s"%>
 <html>
 <head>
 <script type="text/javascript" src="../jquery/jquery-1.9.1.min.js"></script>
@@ -17,11 +18,21 @@
 		console.log(data);
 	}
 	function callBackHello(data) {
+		
 
+		$("#sqlError0").remove();
+		
+		$("#notChecked").remove();
+		$("#nullChangeNo").remove();
+		
 		if (data == "notExists") {
-			window.location = "submit.html";
+			
+			$("#label4submitTask").css({'color':'red'},3000);
+			
+			
+			$("#submitTask_taskName").focus();
+			//window.location = "submit.action";
 		} else if (data == "notChecked") {
-			$("#notChecked").remove();
 			$("body")
 					.prepend(
 							"<div id='notChecked' style=\"color:red;\">sql验证已经提交，等待DBA验证</div>");
@@ -35,8 +46,11 @@
 		}
 		//console.log(data);
 	}
-	function checkChangeExist(changeNo) {
+	function checkChangeExist(e) {
+
+		e.preventDefault();
 		if ($("#changeNo").val() == "") {
+
 			$("#nullChangeNo").remove();
 			$("body")
 					.prepend(
@@ -46,8 +60,8 @@
 
 		CheckChangeNOExists.queryChangeNo($("#changeNo").val(), callBackHello);
 	}
-	$(document).ready(function() {
-
+	$(document).ready(function() {	
+		
 	});
 </script>
 <script type="text/javascript">
@@ -55,8 +69,18 @@
 </script>
 </head>
 <body>
-	<label for="changeNo">变更号</label>
-	<input type="text" id="changeNo">
-	<input type="button" onclick="checkChangeExist(234)" value="检查变更是否存在" />
+
+	<s:label cssStyle="color:green;" for="submitExist" value="按照变更号提交验证申请" />
+	<s:form id="submitExist">
+		<s:textfield type="text" id="changeNo" label="输入变更号" />
+		<s:submit onclick="checkChangeExist(event)" value="检查是否存在" />
+	</s:form>
+
+	<s:label id="label4submitTask" cssStyle="color:green;" for="submitTask" value="按照任务名称提交验证申请：" />
+	<s:form id="submitTask">
+		<s:textfield name="taskName" label="任务名称" />
+		<s:file name="taskFile" label="上传附件" />
+		<s:submit value="提交"></s:submit>
+	</s:form>
 </body>
 </html>

@@ -59,7 +59,7 @@ li {
 
 		
 
-		<li><a id="submitSql" href="sqlVerify/check.jsp">提交sql验证</a></li>
+		<li><a id="submitSql" href="sqlVerify/check.action">提交sql验证</a></li>
 		
 		<li><a id="taskList" href="extjs/taskList.jsp">任务队列查询</a></li>
 		

@@ -160,12 +160,12 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 					public List doInHibernate(Session arg0)
 							throws HibernateException, SQLException {
 						
-						
-						String changeNoCriteria = (changeNo == null) ? ""
+						System.out.println(changeNo);
+						String changeNoCriteria = (changeNo.equals("")) ? ""
 								: "and name like '%" + changeNo + "%'";
-						String taskNameCriteria = taskName == null ? ""
+						String taskNameCriteria = (taskName == null) ? ""
 								: "and name like '%" + changeNo + "%'";
-						String statusCriteria = status== null ? ""
+						String statusCriteria = (status== null) ? ""
 								: "and name like '%" + changeNo + "%'";
 						System.out.println("FROM entity.SqlVerifyTask where 1=1 "
 										+ changeNoCriteria
