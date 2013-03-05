@@ -1,0 +1,44 @@
+
+<dwr>
+	<allow>
+		<create creator="new" javascript="JDate">
+			<param name="class" value="java.util.Date" />
+		</create>
+		<create creator="new" javascript="testDwr">
+			<param name="class" value="test.Dwr" />
+		</create>
+
+		<create creator="new" javascript="changeQeury">
+			<param name="class" value="spring.service.serviceImp.FtpServiceImp" />
+		</create>
+		
+		
+		<create creator="new" javascript="CheckChangeNOExists">
+			<param name="class" value="dwr.CheckChangeNOExists" />
+		</create>
+		
+		
+		
+		<create creator="new" javascript="JdbcDaoImpl">
+			<param name="class" value="spring.dao.JdbcDaoImpl" />
+		</create>
+		
+		<create creator="new" javascript="GetSqlById">
+			<param name="class" value="dwr.GetSqlById" />
+		</create>
+		
+		
+		<create creator="new" javascript="DBACheck">
+			<param name="class" value="dwr.DBACheck" />
+		</create>
+		
+
+		<create creator="spring" javascript="dao">
+			<param name="beanName" value="jdbcDaoimpl" />
+		</create>
+		<convert converter="bean" match="entity.*" />
+		
+		
+		
+	</allow>
+</dwr>

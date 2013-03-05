@@ -1,0 +1,29 @@
+<meta http-equiv="Content-Type" content="text/html; charset=GB2312">
+<html>
+
+<body>
+<div style="color:red;">变更已经存在，变更标题是：<span style="color:green;">XXXXXXXXXXXXXXXXX</span> , 利用已有变更提交sql验证？</div>
+
+	<form action="../submitSqlVerify.action">
+		<label for="submitter">提交人</label> <input type="text" id="submitter"
+			name="submitter" /> <br>
+			
+		<label for="changeName">变更名称</label> <input type="text" id="changeName"
+			name="changeName" /><br>
+			
+			
+			<label for="changeNo">变更号</label> <input type="text" id="changeNo"
+			name="changeNo" /> <br>
+			
+			<label for="optimizer">优化器模式</label>
+			<select id="optimizer" name="optimizer">
+				<option>RULE</option>
+				<option>CHOOSE</option>
+				<option>FIRST_ROWS</option>
+				<option>ALL_ROWS</option>
+			</select> <br> 
+			
+		<input type="submit" value="提交"> <br>
+	</form>
+</body>
+</html>
