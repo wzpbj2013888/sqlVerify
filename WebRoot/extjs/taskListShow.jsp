@@ -4,6 +4,7 @@
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
+	
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -28,7 +29,7 @@
 		return "验证申请已反馈";
 	}
 	Ext.onReady(function() {
-				
+	
 				fields = ['id','name','status'];
 				url = "<%= basePath %>json/showTaskList.action";
 				

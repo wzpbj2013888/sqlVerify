@@ -25,11 +25,15 @@ li {
 		}); */
 		/* 
 		 var arr = [ 'userList', 'changeInfo', 'indexPage', 'submitSql',
-		 'logout', 'sqlVerifyStatus','planInfo' ]; */
+		 'logout', 'sqlVerifyStatus','planInfo' ]; 
+		var arr = [  'indexPage', 'submitSql',
+				'logout', 'sqlVerifyStatus', 'planInfo','taskList' ];*/
 		 
 		 
 		var arr = [  'indexPage', 'submitSql',
-				'logout', 'sqlVerifyStatus', 'planInfo','taskList' ];
+				'taskList' ];
+				
+				
 		for (ar in arr) {
 			Ext.EventManager.on(arr[ar], 'click', handleClick);
 		}
@@ -61,13 +65,13 @@ li {
 		
 		
 
-		<li><a id="sqlVerifyStatus" href="extjs/status.jsp">sql验证状态信息</a>
+		<!-- <li><a id="sqlVerifyStatus" href="extjs/status.jsp">sql验证状态信息</a>
 		</li>
 
 
 		<li><a id="planInfo" href="extjs/planInfo.html">执行计划信息</a></li>
 
-		<li><a id="logout" href="extjs/test.html">退出系统</a></li>
+		<li><a id="logout" href="extjs/test.html">退出系统</a></li> -->
 
 	</ul>
 </body>

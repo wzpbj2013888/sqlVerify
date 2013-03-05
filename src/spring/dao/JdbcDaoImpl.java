@@ -167,7 +167,10 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 								: "and name like '%" + changeNo + "%'";
 						String statusCriteria = status== null ? ""
 								: "and name like '%" + changeNo + "%'";
-
+						System.out.println("FROM entity.SqlVerifyTask where 1=1 "
+										+ changeNoCriteria
+										+ taskNameCriteria
+										+ statusCriteria);
 						Query query = arg0
 								.createQuery("FROM entity.SqlVerifyTask where 1=1 "
 										+ changeNoCriteria

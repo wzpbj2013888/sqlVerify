@@ -24,7 +24,7 @@ window.parent.document.getElementById("container").src = "taskListShow.jsp?chang
 
 </head>
 <body>
-	<table>
+	<table style="display: none;">
 		<tr>
 			<td>±ä¸üºÅ</td>
 			<td><input type="text" id="changeNo" />
