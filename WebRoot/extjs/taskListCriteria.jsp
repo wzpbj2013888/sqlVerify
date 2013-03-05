@@ -16,7 +16,8 @@
 
 <script type="text/javascript">
 function query() {
-
+var a = $("#changeNo").val();
+console.log(isNaN(a));
 window.parent.document.getElementById("container").src = "taskListShow.jsp?changeNo='"+($("#changeNo").val() =="" ? "" : $("#changeNo").val())+"'&taskName='"+($("#taskName").val() =="" ? '' : $("#taskName").val())+"'&status='"+($("#status").val() =="" ? '' : $("#status").val())+"'";
 	}
 	

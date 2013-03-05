@@ -39,7 +39,7 @@
 			var taskName = (<%=request.getParameter("taskName")%> == null) ? "" : <%=request.getParameter("taskName")%>;
 			
 				fields = ['id','name','status'];
-				url = "<%= basePath %>json/showTaskList.action?changeNo="+changeNo+"&taskName='"+taskName+"'&status='"+status+"'";
+				url = "<%= basePath %>json/showTaskList.action?changeNo="+changeNo+"&taskName="+taskName+"&status="+status;
 			
 				
 				title = "任务队列查询结果";

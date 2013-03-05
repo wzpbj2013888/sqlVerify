@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="jdbcDaoimpl" class="spring.dao.JdbcDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="jdbcDaoimpl1" class="spring.dao.JdbcDaoImpl1">
+		<property name="dataSource" ref="dataSource1"></property>
+		<property name="sessionFactory" ref="sessionFactory1"></property>
+	</bean>
+
+	<bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver">
+		</property>
+		<!-- <property name="url" value="jdbc:oracle:thin:@10.7.21.223:1521:orcl"> 
+			</property> <property name="username" value="scott"></property> <property 
+			name="password" value="tiger"></property> -->
+
+		<property name="url" value="jdbc:oracle:thin:@192.168.1.21:1521:prddb">
+		</property>
+		<property name="username" value="lisro"></property>
+		<property name="password" value="lisro"></property>
+
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+
+
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver">
+		</property>
+		<property name="url" value="jdbc:oracle:thin:@192.168.1.21:1521:prddb">
+		</property>
+		<property name="username" value="lisro"></property>
+		<property name="password" value="lisro"></property>
+
+		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver"></property> 
+			<property name="url" value="jdbc:mysql://localhost:3306/sqlverify"></property> 
+			<property name="username" value="wzp"></property> <property name="password" 
+			value="ncl@1234"></property> -->
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.OracleDialect
+				</prop><!-- 
+				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<value>entity</value>
+		</property>
+
+	</bean>
+
+	<bean id="sessionFactory1"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource1" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.OracleDialect
+				</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<value>entity</value>
+		</property>
+
+	</bean>
+	<bean id="getAllUser" class="struts.action.ShowAll">
+		<property name="dao" ref="jdbcDaoimpl"></property>
+	</bean>
+
+	<bean id="getAllChangeInfo" class="struts.action.ShowChangeInfo">
+		<property name="dao" ref="jdbcDaoimpl"></property>
+	</bean>
+
+
+	<bean id="getAllSqlVerifyInfo" class="struts.action.ShowSqlVerifyInfo">
+		<property name="dao" ref="jdbcDaoimpl"></property>
+	</bean>
+
+	<bean id="loginAction" class="struts.action.login.action.LoginAction"></bean>
+
+
+	<bean id="submitSql" class="struts.action.SubmitSql"></bean>
+	<bean id="ftpService" class="spring.service.serviceImp.FtpServiceImp">
+		<property name="jdbcDaoImpl" ref="jdbcDaoimpl"></property>
+		<property name="jdbcDaoImpl1" ref="jdbcDaoimpl1"></property>
+	</bean>
+	<bean id="submitSqlVerify" class="struts.action.SubmitSqlVerify">
+		<property name="FtpService" ref="ftpService"></property>
+	</bean>
+
+
+	<bean id="getTaskList" class="struts.action.ShowTaskList">
+		<property name="dao" ref="jdbcDaoimpl"></property>
+	</bean>
+
+	<bean id="getSqlVerifyHistory" class="struts.action.ShowVerifyHistory">
+		<property name="dao" ref="jdbcDaoimpl"></property>
+	</bean>
+
+
+</beans>
