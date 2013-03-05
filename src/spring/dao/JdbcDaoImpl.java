@@ -163,10 +163,10 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 						System.out.println(changeNo);
 						String changeNoCriteria = (changeNo.equals("")) ? ""
 								: "and name like '%" + changeNo + "%'";
-						String taskNameCriteria = (taskName == null) ? ""
-								: "and name like '%" + changeNo + "%'";
-						String statusCriteria = (status== null) ? ""
-								: "and name like '%" + changeNo + "%'";
+						String taskNameCriteria = (taskName.equals("")) ? ""
+								: "and name like '%" + taskName + "%'";
+						String statusCriteria = (status.equals("")) ? ""
+								: "and name like '%" + status + "%'";
 						System.out.println("FROM entity.SqlVerifyTask where 1=1 "
 										+ changeNoCriteria
 										+ taskNameCriteria
@@ -186,11 +186,43 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 		return result;
 	}
 
-	public int getCountTaskList() {
+	public long getCountTaskList() {
 		List ls = getHibernateTemplate().find(
 				"select count(*)from entity.SqlVerifyTask");
 		System.out.println(ls.get(0));
 		// TODO Auto-generated method stub
-		return ls.size();
+		return (Long)ls.get(0);
+	}
+
+	public List getVerifyHistory(final int start, final int end,final int taskId) {
+
+		System.out.println(getHibernateTemplate());
+		List result = this.getHibernateTemplate().executeFind(
+				
+				
+				new HibernateCallback() {
+
+					public List doInHibernate(Session arg0)
+							throws HibernateException, SQLException {
+						
+						
+						System.out.println("FROM entity.CheckHistory where taskId = " + taskId);
+						
+						
+						Query query = arg0
+								.createQuery("FROM entity.CheckHistory where taskId = " + taskId);
+
+						query.setMaxResults(end - start);
+						query.setFirstResult(start);
+						return query.list();
+					}
+
+				});
+		return result;
+	}
+
+	public int getCountVerifyHistory() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

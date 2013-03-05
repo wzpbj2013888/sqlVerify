@@ -15,9 +15,13 @@
 
 <script type="text/javascript" src="<%= basePath %>extjs/ext-all.js"></script>
 <script type="text/javascript">
+	function linkTo(o,e){
+		e.preventDefault();
+		window.parent.location = o.href;
+	}
 	function renderName(value,p,record) {
 		return Ext.String
-				.format("<b><a  href='sqlVerifyHistory.jsp?taskId="
+				.format("<b><a onclick='linkTo(this,event);' href='sqlVerifyHistory.action?taskId="
 						+ record.data.id + "'>" + value + "</a></b>");
 	}
 	function renderStatus(value){
@@ -31,10 +35,12 @@
 	Ext.onReady(function() {
 	
 				var changeNo = (<%=request.getParameter("changeNo")%> == null) ? "" : <%=request.getParameter("changeNo")%>;
-				console.log(changeNo);
+			var status = (<%=request.getParameter("status")%> == null) ? "" : <%=request.getParameter("status")%>;
+			var taskName = (<%=request.getParameter("taskName")%> == null) ? "" : <%=request.getParameter("taskName")%>;
+			
 				fields = ['id','name','status'];
-				url = "<%= basePath %>json/showTaskList.action?changeNo="+changeNo;
-				console.log(url);
+				url = "<%= basePath %>json/showTaskList.action?changeNo="+changeNo+"&taskName='"+taskName+"'&status='"+status+"'";
+			
 				
 				title = "任务队列查询结果";
 				width = 700;

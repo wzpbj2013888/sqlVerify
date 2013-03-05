@@ -153,6 +153,9 @@ public class FtpServiceImp implements FtpServiceI {
 				
 				jdbcDaoImpl.getJdbcTemplate().execute(saveTask);
 				
+				int taskId = jdbcDaoImpl.getJdbcTemplate().queryForInt("select sqlverify_task_seq.currval from dual");
+				
+				
 				String saveSqlClause = "insert into sqlverify_verifyinfo (id,changeId,changeState,statementId,optimizer,sqlStatement) values(sqlverify_info.nextval,"
 						+ changeNo
 						+ ",'not passed','"
@@ -161,6 +164,12 @@ public class FtpServiceImp implements FtpServiceI {
 						+ orgSql[i].replaceAll("'", "''") + "')";
 
 				jdbcDaoImpl.getJdbcTemplate().execute(saveSqlClause);
+				
+				
+				String saveTaskHistory = "insert into sqlCheckHistory(id,taskId,submitDate,feedBackDate,status) values (sqlCheckHistory_seq.nextval,"+taskId+", sysdate,null,'已提交验证申请')";
+				jdbcDaoImpl.getJdbcTemplate().execute(saveTaskHistory);
+				
+				
 
 			} catch (Exception e) {
 				return e.getMessage();

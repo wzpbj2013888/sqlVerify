@@ -1,7 +1,10 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -31,7 +34,10 @@ public class ChangeInfo {
 	public void setState(String state) {
 		this.state = state;
 	}
+	@SequenceGenerator(name = "sqlverify_sqlchangeinfo_seq", sequenceName = "sqlverify_sqlchangeinfo_seq")
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sqlverify_sqlchangeinfo_seq")
+	
 	private int id;
 	private String name;
 	private String owner;

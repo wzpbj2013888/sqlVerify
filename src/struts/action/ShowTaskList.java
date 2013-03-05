@@ -12,7 +12,7 @@ public class ShowTaskList {
 
 	private JdbcDaoImpl dao;
 	private List allUsers;
-	private int totalCount;
+	private long totalCount;
 	private int start;
 	private int page;
 	private String changeNo;
@@ -74,7 +74,7 @@ public class ShowTaskList {
 
 	public String execute() {
 		List all = null;
-		int total = 0;
+		long total = 0;
 		all = getDao().getTaskList(getStart(),getPage() * getLimit(),getChangeNo(),getTaskName(),getStatus());
 		
 		total = getDao().getCountTaskList();
@@ -103,12 +103,12 @@ public class ShowTaskList {
 		this.allUsers = allUsers;
 	}
 
-	public int getTotalCount() {
+	public long getTotalCount() {
 		return totalCount;
 	}
 
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
+	public void setTotalCount(long total) {
+		this.totalCount = total;
 	}
 
 }

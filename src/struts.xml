@@ -21,6 +21,10 @@
 			<result type="json"></result>
 		</action>
 		
+		
+		<action name="showSqlVerifyHistory" class="getSqlVerifyHistory">
+			<result type="json"></result>
+		</action>
 	</package>
 	
 	<package name="submit" namespace="/" extends="struts-default" >
@@ -41,6 +45,12 @@
 	<package name="sqlVerify" namespace="/sqlVerify" extends="struts-default">
 		<action name="check">
 			<result>/sqlVerify/check.jsp</result>
+		</action>
+	</package>
+	
+	<package name="showExtjs" namespace="/extjs" extends="struts-default">
+		<action name="sqlVerifyHistory">
+			<result>/sqlVerify/sqlVerifyHistory.jsp</result>
 		</action>
 	</package>
 </struts>    
