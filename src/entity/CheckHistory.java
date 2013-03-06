@@ -46,5 +46,11 @@ public class CheckHistory {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public int getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
 	
 }

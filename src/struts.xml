@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<constant name="struts.objectFactory" value="spring" />
-	
+
 
 	<package name="json" namespace="/json" extends="json-default">
 		<action name="showAll" class="getAllUser">
@@ -11,46 +11,55 @@
 		<action name="showAllChangeInfo" class="getAllChangeInfo">
 			<result type="json"></result>
 		</action>
-		
-		
+
+
 		<action name="showAllSqlVerifyInfo" class="getAllSqlVerifyInfo">
 			<result type="json"></result>
 		</action>
-		
+
 		<action name="showTaskList" class="getTaskList">
 			<result type="json"></result>
 		</action>
-		
-		
+
+
 		<action name="showSqlVerifyHistory" class="getSqlVerifyHistory">
 			<result type="json"></result>
 		</action>
+		<action name="showSqlQueries" class="showSqlQueries">
+			<result type="json"></result>
+		</action>
 	</package>
-	
-	<package name="submit" namespace="/" extends="struts-default" >
+
+	<package name="submit" namespace="/" extends="struts-default">
 		<action name="submitSql" class="submitSql">
 			<result name="success">/submitFinished.jsp</result>
 			<result name="input">/submitSql.jsp</result>
 		</action>
-		
-		
+
+
 		<action name="submitSqlVerify" class="submitSqlVerify" method="directExecuteSql">
-		<result name="success">/sqlVerify/success.html</result>
-		<result name="error">/sqlVerify/error.jsp</result>
+			<result name="success">/sqlVerify/success.html</result>
+			<result name="error">/sqlVerify/error.jsp</result>
 		</action>
-		
+
 	</package>
 	<include file="struts/action/login/action/login_struts.xml"></include>
-	
+
 	<package name="sqlVerify" namespace="/sqlVerify" extends="struts-default">
 		<action name="check">
 			<result>/sqlVerify/check.jsp</result>
 		</action>
 	</package>
-	
+
 	<package name="showExtjs" namespace="/extjs" extends="struts-default">
 		<action name="sqlVerifyHistory">
 			<result>/sqlVerify/sqlVerifyHistory.jsp</result>
+		</action>
+		<action name="sqlVerifyList">
+			<result>/sqlVerify/sqlVerifyList.jsp</result>
+		</action>
+		<action name="sqlQueries">
+			<result>/sqlVerify/sqlQueries.jsp</result>
 		</action>
 	</package>
 </struts>    

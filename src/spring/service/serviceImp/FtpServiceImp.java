@@ -40,21 +40,21 @@ public class FtpServiceImp implements FtpServiceI {
 	 */
 	public String queryChangeNo(String changeNo) {
 		// TODO Auto-generated method stub
-		
+
 		int checkDB;
-		String sql = "select count(*) from sqlverify_verifyinfo where changeId = " + changeNo + " and changestate = 'not checked'";
-		
-		
+		String sql = "select count(*) from sqlverify_verifyinfo where changeId = "
+				+ changeNo + " and changestate = 'not checked'";
+
 		try {
-			 checkDB = jdbcDaoImpl.getJdbcTemplate().queryForInt(sql);
-			 System.out.println(checkDB);
+			checkDB = jdbcDaoImpl.getJdbcTemplate().queryForInt(sql);
+			System.out.println(checkDB);
 		} catch (Exception e) {
 			System.out.println(e);
 			return "sqlError0";
 		}
-		if (checkDB > 0){
-			return "notChecked"; 
-		}else{
+		if (checkDB > 0) {
+			return "notChecked";
+		} else {
 			String isExit = "notExists";
 			try {
 				ftpImp.setFtp("localhost", 21, "slh", "ncl@1234");
@@ -65,7 +65,7 @@ public class FtpServiceImp implements FtpServiceI {
 
 			return isExit.equals("exists") ? "exists" : "notExists";
 		}
-		
+
 	}
 
 	/**
@@ -86,11 +86,25 @@ public class FtpServiceImp implements FtpServiceI {
 	/*
 	 * 执行sql语句 param ChangeNo 变更号 param sqls 变更文件中的sql语句数组
 	 */
-	public String executeSql(String changeNo, String[] sqls,String optimizer) {
+	public String executeSql(String changeNo, String[] sqls, String optimizer) {
 		FormatSql format = new FormatSql();
 		String[] ids;
 		long time = 0;
 		String[] orgSql = sqls.clone();
+
+		String saveTask = "insert into sqlverify_task values(sqlverify_task_seq.nextval,'"
+				+ changeNo + "-" + "变更名','submitted')";
+
+		jdbcDaoImpl.getJdbcTemplate().execute(saveTask);
+
+		int taskId = jdbcDaoImpl.getJdbcTemplate().queryForInt(
+				"select sqlverify_task_seq.currval from dual");
+		String saveTaskHistory = "insert into sqlCheckHistory(id,taskId,submitDate,feedBackDate,status) values (sqlCheckHistory_seq.nextval,"
+				+ taskId + ", sysdate,null,'已提交验证申请')";
+		jdbcDaoImpl.getJdbcTemplate().execute(saveTaskHistory);
+
+		int sqlCheckHistoryId = jdbcDaoImpl.getJdbcTemplate().queryForInt(
+				"select sqlCheckHistory_seq.currval from dual");
 
 		ids = format.formate(sqls, changeNo);
 		for (int i = 0; i < sqls.length; i++) {
@@ -110,20 +124,36 @@ public class FtpServiceImp implements FtpServiceI {
 						.queryForList(sql);
 
 				for (Map<String, Object> o : ls) {
-					String insert = "insert into SQLEXECUTIONPLAN values (sqlexecutionplan_seq.nextval," + o.get("bytes") + ","
-							+ o.get("cardinality") + "," + o.get("cost") + ",'"
-							+ o.get("database") + "'," + o.get("io_cost")
-							+ ",'" + o.get("object_name") + "','"
-							+ o.get("object_owner") + "','"
-							+ o.get("operation") + "'," + o.get("orderBy")
-							+ ",'" + o.get("statement_id") + "',"
+					String insert = "insert into SQLEXECUTIONPLAN (ID,BYTES,CARDDINALITY,COST,DATABASE,HISTORYID,IO_COST,OBJECT_NAME,OBJECT_OWNER,OPERATION,ORDERBY,SQLID,TIME) values (sqlexecutionplan_seq.nextval,"
+							+ o.get("bytes")
+							+ ","
+							+ o.get("cardinality")
+							+ ","
+							+ o.get("cost")
+							+ ",'"
+							+ o.get("database")
+							+ "',"
+							+ sqlCheckHistoryId
+							+ ",'"
+							+ o.get("io_cost")
+							+ "','"
+							+ o.get("object_name")
+							+ "','"
+							+ o.get("object_owner")
+							+ "','"
+							+ o.get("operation")
+							+ "',"
+							+ o.get("orderBy")
+							+ ","
+							+ i
+							+ ","
 							+ o.get("time") + ")";
 					jdbcDaoImpl.getJdbcTemplate().execute(insert);
 				}
 				/*
 				 * 测试库上执行
-				 * */
-				
+				 */
+
 				beginTime = System.currentTimeMillis();
 				jdbcDaoImpl1.getJdbcTemplate().execute(sqls[i]);
 				endTime = System.currentTimeMillis();
@@ -138,38 +168,51 @@ public class FtpServiceImp implements FtpServiceI {
 						.queryForList(sql1);
 
 				for (Map<String, Object> o : ls1) {
-					String insert = "insert into SQLEXECUTIONPLAN values (sqlexecutionplan_seq.nextval," + o.get("bytes") + ","
-							+ o.get("cardinality") + "," + o.get("cost") + ",'"
-							+ o.get("database") + "'," + o.get("io_cost")
-							+ ",'" + o.get("object_name") + "','"
-							+ o.get("object_owner") + "','"
-							+ o.get("operation") + "'," + o.get("orderBy")
-							+ ",'" + o.get("statement_id") + "',"
+					String insert = "insert into SQLEXECUTIONPLAN (ID,BYTES,CARDDINALITY,COST,DATABASE,HISTORYID,IO_COST,OBJECT_NAME,OBJECT_OWNER,OPERATION,ORDERBY,SQLID,TIME) values (sqlexecutionplan_seq.nextval,"
+							+ o.get("bytes")
+							+ ","
+							+ o.get("cardinality")
+							+ ","
+							+ o.get("cost")
+							+ ",'"
+							+ o.get("database")
+							+ "',"
+							+ sqlCheckHistoryId
+							+ ",'"
+							+ o.get("io_cost")
+							+ "','"
+							+ o.get("object_name")
+							+ "','"
+							+ o.get("object_owner")
+							+ "','"
+							+ o.get("operation")
+							+ "',"
+							+ o.get("orderBy")
+							+ ","
+							+ i
+							+ ","
 							+ o.get("time") + ")";
 					jdbcDaoImpl.getJdbcTemplate().execute(insert);
 				}
-				
-				String saveTask = "insert into sqlverify_task values(sqlverify_task_seq.nextval,'"+changeNo + "-"+"变更名','submitted')";
-				
-				jdbcDaoImpl.getJdbcTemplate().execute(saveTask);
-				
-				int taskId = jdbcDaoImpl.getJdbcTemplate().queryForInt("select sqlverify_task_seq.currval from dual");
-				
-				
+
 				String saveSqlClause = "insert into sqlverify_verifyinfo (id,changeId,changeState,statementId,optimizer,sqlStatement) values(sqlverify_info.nextval,"
 						+ changeNo
 						+ ",'not passed','"
 						+ ids[i]
-						+ "','" + optimizer+ "','"
-						+ orgSql[i].replaceAll("'", "''") + "')";
+						+ "','"
+						+ optimizer
+						+ "','"
+						+ orgSql[i].replaceAll("'", "''")
+						+ "')";
 
 				jdbcDaoImpl.getJdbcTemplate().execute(saveSqlClause);
-				
-				
-				String saveTaskHistory = "insert into sqlCheckHistory(id,taskId,submitDate,feedBackDate,status) values (sqlCheckHistory_seq.nextval,"+taskId+", sysdate,null,'已提交验证申请')";
-				jdbcDaoImpl.getJdbcTemplate().execute(saveTaskHistory);
-				
-				
+
+				String saveSqlQuery = "insert into SqlQueries(id,sqlStatement,historyId,sqlId) values (SqlQueries_seq.nextval,'"
+						+ orgSql[i].replaceAll("'", "''")
+						+ "',"
+						+ sqlCheckHistoryId + "," + i + ")";
+
+				jdbcDaoImpl.getJdbcTemplate().execute(saveSqlQuery);
 
 			} catch (Exception e) {
 				return e.getMessage();

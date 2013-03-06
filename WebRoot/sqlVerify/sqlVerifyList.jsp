@@ -14,20 +14,18 @@
 
 <script type="text/javascript" src="<%= basePath %>extjs/ext-all.js"></script>
 <script type="text/javascript">
-	
+	function renderName(value,p,record) {
+		return Ext.String
+				.format("<b><a  href='sqlVerifyHistory.action?taskId="
+						+ record.data.id + "'>点击进入验证结果</a></b>");
+	}
 	Ext.onReady(function() {
 	
 				var taskId = (<%=request.getParameter("taskId")%> == null) ? "" : <%=request.getParameter("taskId")%>;
 				
-				function renderName(value,p,record) {
-					return Ext.String.format("<b><a  href='sqlQueries.action?historyId="
-									+ record.data.id +"'>点击进入验证结果</a></b>");
-				}
-							
 				fields = ['id','feedBackDate','status','submitDate','submitDate'];
 				
 				url = "<%= basePath %>json/showSqlVerifyHistory.action?taskId="+taskId;
-				
 				
 				title = "历次验证结果";
 				width = 700;

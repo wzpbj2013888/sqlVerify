@@ -23,15 +23,22 @@ public class ExecutionPlanInfo {
 	private int bytes;
 	private int time;
 	private int io_cost;
-	private String statementId;
+	private int historyId;
+	private int sqlId;
+	public int getHistoryId() {
+		return historyId;
+	}
+	public void setHistoryId(int historyId) {
+		this.historyId = historyId;
+	}
+	public int getSqlId() {
+		return sqlId;
+	}
+	public void setSqlId(int sqlId) {
+		this.sqlId = sqlId;
+	}
 	private String database;
 	
-	public String getStatementId() {
-		return statementId;
-	}
-	public void setStatementId(String statementId) {
-		this.statementId = statementId;
-	}
 	public int getId() {
 		return id;
 	}

@@ -17,39 +17,36 @@
 	
 	Ext.onReady(function() {
 	
-				var taskId = (<%=request.getParameter("taskId")%> == null) ? "" : <%=request.getParameter("taskId")%>;
+				var historyId = (<%=request.getParameter("historyId")%> == null) ? "" : <%=request.getParameter("historyId")%>;
 				
 				function renderName(value,p,record) {
-					return Ext.String.format("<b><a  href='sqlQueries.action?historyId="
-									+ record.data.id +"'>点击进入验证结果</a></b>");
+				
+					return Ext.String.format("<b><a  href='sqlVerifyList.action?historyId="
+									+ record.data.id+"&sqlId="+record.data.sqlId+"'>点击进入验证结果</a></b>");
 				}
 							
-				fields = ['id','feedBackDate','status','submitDate','submitDate'];
 				
-				url = "<%= basePath %>json/showSqlVerifyHistory.action?taskId="+taskId;
+				fields = ['sqlId','historyId','sqlStatement','id'];
+				
+				url = "<%= basePath %>json/showSqlQueries.action?historyId="+historyId;
 				
 				
-				title = "历次验证结果";
+				title = "Sql语句列表";
 				width = 700;
 				height = 500;
 				columns = [ 
 				{
-					text : "提交日期",
-					dataIndex : 'submitDate',
+					text : "Sql编号",
+					dataIndex : 'sqlId',
 					width: 170
 				}, 
 				{
-					text : "反馈日期",
-					dataIndex : 'feedBackDate',
+					text : "Sql语句",
+					dataIndex : 'sqlStatement',
 					width: 170
 				} , 
 				{
-					text : "状态",
-					dataIndex : 'status',
-					width: 170
-				}, 
-				{
-					text : "",
+					text : "点击显示验证结果",
 					dataIndex : 'id',
 					width: 170,
 					renderer:renderName
@@ -85,7 +82,7 @@
 </style>
 </head>
 <body>
-	<h1 style="font-size: 21px;">历史记录查询</h1>
+	<h1 style="font-size: 21px;">Sql 语句列表</h1>
 	<div id="topic-grid"></div>
 </body>
 </html>

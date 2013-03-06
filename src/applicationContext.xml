@@ -17,11 +17,7 @@
 	<bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver">
 		</property>
-		<!-- <property name="url" value="jdbc:oracle:thin:@10.7.21.223:1521:orcl"> 
-			</property> <property name="username" value="scott"></property> <property 
-			name="password" value="tiger"></property> -->
-
-		<property name="url" value="jdbc:oracle:thin:@192.168.1.21:1521:prddb">
+		<property name="url" value="jdbc:oracle:thin:@21db:1521:prddb">
 		</property>
 		<property name="username" value="lisro"></property>
 		<property name="password" value="lisro"></property>
@@ -33,15 +29,11 @@
 
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver">
 		</property>
-		<property name="url" value="jdbc:oracle:thin:@192.168.1.21:1521:prddb">
+		<property name="url" value="jdbc:oracle:thin:@21db:1521:prddb">
 		</property>
 		<property name="username" value="lisro"></property>
 		<property name="password" value="lisro"></property>
 
-		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver"></property> 
-			<property name="url" value="jdbc:mysql://localhost:3306/sqlverify"></property> 
-			<property name="username" value="wzp"></property> <property name="password" 
-			value="ncl@1234"></property> -->
 	</bean>
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -52,8 +44,8 @@
 			<props>
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.OracleDialect
-				</prop><!-- 
-				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 			</props>
 		</property>
 		<property name="packagesToScan">
@@ -72,7 +64,7 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.OracleDialect
 				</prop>
-				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 			</props>
 		</property>
 		<property name="packagesToScan">
@@ -113,6 +105,10 @@
 	<bean id="getSqlVerifyHistory" class="struts.action.ShowVerifyHistory">
 		<property name="dao" ref="jdbcDaoimpl"></property>
 	</bean>
-
+	
+	<bean id="showSqlQueries" class="struts.action.ShowSqlQueries">
+		<property name="dao" ref="jdbcDaoimpl"></property>
+	</bean>
+	
 
 </beans>

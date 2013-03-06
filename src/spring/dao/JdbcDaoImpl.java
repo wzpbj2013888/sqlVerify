@@ -151,7 +151,6 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 
 	public List getTaskList(final int start, final int end,
 			final String changeNo, final String taskName, final String status) {
-		System.out.println(getHibernateTemplate());
 		List result = this.getHibernateTemplate().executeFind(
 				
 				
@@ -160,17 +159,12 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 					public List doInHibernate(Session arg0)
 							throws HibernateException, SQLException {
 						
-						System.out.println(changeNo);
 						String changeNoCriteria = (changeNo.equals("")) ? ""
 								: "and name like '%" + changeNo + "%'";
 						String taskNameCriteria = (taskName.equals("")) ? ""
 								: "and name like '%" + taskName + "%'";
 						String statusCriteria = (status.equals("")) ? ""
 								: "and name like '%" + status + "%'";
-						System.out.println("FROM entity.SqlVerifyTask where 1=1 "
-										+ changeNoCriteria
-										+ taskNameCriteria
-										+ statusCriteria);
 						Query query = arg0
 								.createQuery("FROM entity.SqlVerifyTask where 1=1 "
 										+ changeNoCriteria
@@ -189,14 +183,14 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 	public long getCountTaskList() {
 		List ls = getHibernateTemplate().find(
 				"select count(*)from entity.SqlVerifyTask");
-		System.out.println(ls.get(0));
+		
 		// TODO Auto-generated method stub
 		return (Long)ls.get(0);
 	}
 
 	public List getVerifyHistory(final int start, final int end,final int taskId) {
 
-		System.out.println(getHibernateTemplate());
+
 		List result = this.getHibernateTemplate().executeFind(
 				
 				
@@ -205,8 +199,6 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 					public List doInHibernate(Session arg0)
 							throws HibernateException, SQLException {
 						
-						
-						System.out.println("FROM entity.CheckHistory where taskId = " + taskId);
 						
 						
 						Query query = arg0
@@ -222,6 +214,36 @@ public class JdbcDaoImpl extends JdbcDaoSupport {
 	}
 
 	public int getCountVerifyHistory() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public List getSqlQueries(final int start, final int end,final int historyId) {
+
+
+		List result = this.getHibernateTemplate().executeFind(
+				
+				
+				new HibernateCallback() {
+
+					public List doInHibernate(Session arg0)
+							throws HibernateException, SQLException {
+						
+
+
+						Query query = arg0
+								.createQuery("FROM entity.SqlQueries where historyId = " + historyId);
+
+						query.setMaxResults(end - start);
+						query.setFirstResult(start);
+						return query.list();
+					}
+
+				});
+		return result;
+	}
+
+	public int getCountSqlQueries() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
